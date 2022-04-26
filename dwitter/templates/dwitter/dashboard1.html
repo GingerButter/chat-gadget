@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'dwitter/additional.css' %}">
+
+{% block show %}
+    <a href="{% url 'dwitter:dashboard' %} ">
+        <section class="hero is-small is-success mb-4">
+            <div class="hero-body">
+                <h1 class="title is-1">Chat</h1>
+                <p class="subtitle is-4">
+                    Wanna talk?
+                </p>
+            </div>
+        </section>
+    </a>
+{% endblock show %}
+
+{% block content %}
+
+<div class="column", id="vid">
+    <!-- {% for dweet in dweets %}
+        <div class="box">
+            {{dweet.body}} 
+            <span class="is-small has-text-grey-light">
+                ({{ dweet.created_at }} by 1)
+            </span>
+        </div>
+    {% endfor %} -->
+    <video controls autoplay>
+        <source src='{% static "dwitter/sample.mp4" %}' type="video/mp4">
+    </video>
+</div>
+
+<div class="column is-one-third">
+
+    <!-- <div class="block">
+        <a href="{% url 'dwitter:profile_list' %} ">
+            <button class="button is-dark is-outlined is-fullwidth">
+                All Profiles
+            </button>
+        </a>
+    </div> -->
+    
+
+
+    <div class="block">
+        <div class="block", id="database">
+            {% for dweet in dweets %}
+                <div class="box">
+                    {{dweet.body}} 
+                    <span class="is-small has-text-grey-light">
+                        ({{ dweet.created_at }} by 1)
+                    </span>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="block">
+            <h2 class="title is-2">Post here</p>
+        </div>
+        <div class="block">
+            <form method="post", id="chat">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="button is-success is-fullwidth is-medium mt-5"
+                        type="submit">Post
+                </button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
+
+{% block javascript %}
+<script>
+    /*
+        On submiting the form, send the POST ajax
+        request to server and after successfull submission
+        display the object.
+    */
+    $("#chat").submit(function (e) {
+        // preventing from page reload and default actions
+        e.preventDefault();
+        // serialize the data for sending the form data.
+        var serializedData = $(this).serialize();
+        // make POST ajax call
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'dwitter:dashboardPost' %}",
+            data: serializedData,
+            success: function (response) {
+                // on successfull creating object
+                // 1. clear the form.
+                $("#chat").trigger('reset');
+                // 2. focus to nickname input 
+            },
+            error: function (response) {
+                // alert the error if any error occured
+                alert(response["responseJSON"]["error"]);
+            }
+        })
+    })
+    setInterval(function(){
+        $("#database").load(location.href + " #database");
+    },500)   
+</script>
+
+
+{% endblock javascript %}

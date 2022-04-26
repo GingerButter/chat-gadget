@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include the Bulma CSS framework for styling -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <title>Chat</title>
+</head>
+
+<body>
+    {% block show %}{% endblock show %}
+    <!-- <a href="{% url 'dwitter:dashboard' %} ">
+        <section class="hero is-small is-success mb-4">
+            <div class="hero-body">
+                <h1 class="title is-1">Chat</h1>
+                <p class="subtitle is-4">
+                    Wanna talk?
+                </p>
+            </div>
+        </section>
+    </a> -->
+
+
+    <div class="container">
+        <div class="columns">
+
+            {% block content %}
+
+            {% endblock content %}
+
+        </div>
+    </div>
+
+    <!-- <video controls autoplay>
+        <source src='{% static "dwitter/sample.mp4" %}' type="video/mp4">
+    </video> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    {% block javascript %}
+    {% endblock javascript %}
+   
+
+</body>
+
+</html>
